@@ -39,28 +39,15 @@ class ViewController: UIViewController {
         
             let cnt = numStr.characters.count
             var wcout = self.wordArray.count
-            
-            if(lcnt>0){
-                //wcout-=1
-            }
         
             if(cnt<=3){
-                //print(numStr)
-                /*
-                if(cnt==2){
-                    twoNums(numStrn: numStr)
-                }
-                else {
-                    threeNums(numStrn: numStr)
-                }
-                */
+                
                 threeNums(numStrn: numStr)
                 
                 if(cnt == 3){
                     self.wordArray.insert("Hundred", at: self.wordArray.count-1)
                 }
                 
-                //var wcountnew = self.wordArray.count
                 
                 
                 self.wordArray.insert(lev[lcnt], at: wcout)
@@ -72,19 +59,32 @@ class ViewController: UIViewController {
             let three = numStr.substring(from: index)
             numStr = numStr.substring(to: index)
             
-            //print(three)
             threeNums(numStrn: three)
             if(self.wordArray.count-wcout>0){
-                self.wordArray.insert("Hundred", at: self.wordArray.count-1)
-                self.wordArray.insert(lev[lcnt], at: wcout)
+                
+                let hindex = three.index(three.startIndex, offsetBy:1 )
+                let h = three.substring(to:hindex)
+                if(h != "0"){
+                    self.wordArray.insert("Hundred", at: self.wordArray.count-1)
+                }
+                
+                
+                if(lcnt==0){
+                    if(h != "0" ){
+                        if(self.wordArray.count-wcout>2){
+                            self.wordArray.insert("and", at: self.wordArray.count-2)
+                        }
+                    }
+                    else {
+                        self.wordArray.append("and")
+                    }
+                }
+                else{
+                    self.wordArray.insert(lev[lcnt], at: wcout)
+                }
+                
             }
-                //Never Goes in the else
-            else {
-               self.wordArray.insert(lev[lcnt], at: wcout)
-            }
-            //if(lcnt>0){
             
-           // }
             lcnt += 1
             
             
@@ -92,51 +92,10 @@ class ViewController: UIViewController {
         
         }
         
-       // self.wordArray.remove(at: 0)
-        print(self.wordArray)
-        charIndex = (numStr.characters.count)
-        
-        if(self.wordArray.count>0){
-            return
-        }
-        
-        if charIndex == 1 {
-            let firstNumStr = numStr.startIndex
-            let firstNum = Int(String(numStr[firstNumStr]))!
-            
-            printOnesPlace(num: firstNum)
-            
-        }
-        else if charIndex == 2 {
-            twoNums(numStrn: numStr)
-        }
-        else if charIndex > 2 {
-            let start = numStr.index(numStr.startIndex, offsetBy: charIndex - 3)
-            let end = numStr.index(numStr.startIndex, offsetBy: charIndex)
-            let range = start..<end
-            charIndex -= 3
-            self.currIndex += 3
-            
-            let newStr = numStr[range]
-            
-            threeNums(numStrn: newStr)
-            
-            if(charIndex == 1) {
-                let lastNumStr = numStr.startIndex
-                let lastNum = Int(String(numStr[lastNumStr]))!
-                
-                self.currIndex += 1
-                threeNums(numStrn: String(lastNum))
-                
-            }
-        }
-        
-        
-        
-        
+       
         // Print Word Array At The End
         
-        print(self.wordArray)
+        //print(self.wordArray)
         
         
         let newArray = self.wordArray.reversed()
@@ -229,7 +188,7 @@ class ViewController: UIViewController {
             }
             
             //Handle Hundereds Place
-            //printRestOfPlace(num: Int(pow(Double(10),Double(self.currIndex - 1))))
+           // printRestOfPlace(num: Int(pow(Double(10),Double(2))))
             
             printOnesPlace(num:firstNum)
         
@@ -283,7 +242,6 @@ class ViewController: UIViewController {
         
         switch num {
         case 10:
-            //self.wordArray.removeLast()
             letterNum = ("Ten")
             break
         case 11:
